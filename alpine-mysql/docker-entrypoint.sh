@@ -45,3 +45,5 @@ EOSQL
 fi
 
 exec "$@"
+
+/usr/bin/wrapper

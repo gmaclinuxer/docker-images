@@ -1,7 +1,9 @@
-FROM alpine:latest
+# FROM alpine:latest
+FROM rabbitmq:alpine
 
-COPY ./docker-entrypoint.sh /
+COPY ./docker-entrypoint.sh ./requirements.txt /
 
+# mariadb
 RUN addgroup -S mysql \
     && adduser -S mysql -G mysql \
     && apk add --no-cache mysql mysql-client \
@@ -12,6 +14,21 @@ RUN addgroup -S mysql \
     && chown -R mysql:mysql /run/mysqld \
     && chmod -R 777 /run/mysqld
 
-EXPOSE 3306
+# python
+ENV PACKAGES="\
+  python \
+  py-pip \
+  python-dev \
+  uwsgi-python \
+"
+
+RUN apk add --no-cache $PACKAGES \
+    && pip install --no-cache-dir -Ur /requirements.txt  --index=http://pypi.open.oa.com/simple/ --trusted-host pypi.open.oa.com \
+    && rm -rf ~/.cache
+
+EXPOSE 3306 8000
+
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
 CMD ["mysqld", "--user=mysql"]

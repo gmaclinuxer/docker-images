@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+# apk add py-pip --no-cache
+# sudo pip install -r requirements.txt  --index=http://pypi.open.oa.com/simple/ --trusted-host pypi.open.oa.com
+
+Django==1.8.18
+PyMySQL==0.7.11
+MarkupSafe==0.23
+Mako==1.0.1
+httplib2==0.9.1
+suds==0.4
+celery==3.1.18
+django-celery==3.2.1
+requests==2.11.1
+django-extensions==1.7.9
+django-cors-headers==2.0.2
+blueking.component.clouds==0.0.42
+blueking.component.ieod==0.0.36
+blueking.component.qcloud==0.1.14
+blueking.component.tencent==0.0.19
