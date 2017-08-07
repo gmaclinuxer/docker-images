@@ -44,6 +44,7 @@ EOSQL
     fi
 fi
 
+/opt/rabbitmq/sbin/rabbitmq-server &
+
 exec "$@"
 
-/usr/bin/wrapper

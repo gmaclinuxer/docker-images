@@ -6,6 +6,7 @@ COPY ./docker-entrypoint.sh ./requirements.txt /
 # mariadb
 RUN addgroup -S mysql \
     && adduser -S mysql -G mysql \
+    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
     && apk add --no-cache mysql mysql-client \
     && rm -f /var/cache/apk/* \
     && awk '{ print } $1 ~ /\[mysqld\]/ && c == 0 { c = 1; print "skip-host-cache\nskip-name-resolve\nlower_case_table_names=1"}' /etc/mysql/my.cnf > /tmp/my.cnf \
@@ -21,6 +22,9 @@ ENV PACKAGES="\
   python-dev \
   uwsgi-python \
 "
+
+ENV PATH=$PATH:$RABBITMQ_HOME/sbin
+ENV C_FORCE_ROOT=true
 
 RUN apk add --no-cache $PACKAGES \
     && pip install --no-cache-dir -Ur /requirements.txt  --index=http://pypi.open.oa.com/simple/ --trusted-host pypi.open.oa.com \

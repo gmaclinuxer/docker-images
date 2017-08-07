@@ -2,7 +2,7 @@
 # apk add py-pip --no-cache
 # sudo pip install -r requirements.txt  --index=http://pypi.open.oa.com/simple/ --trusted-host pypi.open.oa.com
 
-Django==1.8.18
+Django==1.8.11
 PyMySQL==0.7.11
 MarkupSafe==0.23
 Mako==1.0.1
