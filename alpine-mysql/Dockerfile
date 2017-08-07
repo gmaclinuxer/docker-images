@@ -2,6 +2,7 @@
 FROM rabbitmq:alpine
 
 COPY ./docker-entrypoint.sh ./requirements.txt /
+COPY ./extra.sh /etc/profile.d/
 
 # mariadb
 RUN addgroup -S mysql \
@@ -22,9 +23,6 @@ ENV PACKAGES="\
   python-dev \
   uwsgi-python \
 "
-
-ENV PATH=$PATH:$RABBITMQ_HOME/sbin
-ENV C_FORCE_ROOT=true
 
 RUN apk add --no-cache $PACKAGES \
     && pip install --no-cache-dir -Ur /requirements.txt  --index=http://pypi.open.oa.com/simple/ --trusted-host pypi.open.oa.com \
