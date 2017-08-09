@@ -1,7 +1,19 @@
 #!/bin/sh
 
+
 if [ "$1" = "mysqld" ]; then
     if [ ! -d /var/lib/mysql/mysql ]; then
+
+        if [ -f /opt/rabbitmq/sbin/rabbitmq-server]; then
+            echo 'Start rabbitmq-server in daemon'
+            /opt/rabbitmq/sbin/rabbitmq-server &
+        fi
+
+        if [ -f /usr/sbin/sshd ]; then
+            echo 'Start sshd in daemon'
+            /usr/sbin/sshd -D &
+        fi
+
         echo 'Initializing database'
         mysql_install_db --user=mysql --rpm > /dev/null
         echo 'Database initialized'
@@ -43,8 +55,6 @@ EOSQL
         echo
     fi
 fi
-
-/opt/rabbitmq/sbin/rabbitmq-server &
 
 exec "$@"
 

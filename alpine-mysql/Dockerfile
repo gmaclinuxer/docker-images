@@ -4,6 +4,13 @@ FROM rabbitmq:alpine
 COPY ./docker-entrypoint.sh ./requirements.txt /
 COPY ./extra.sh /etc/profile.d/
 
+ENV LANG=en_US.UTF-8 \
+    TZ=Asia/Shanghai \
+    ROOT_PASSWORD=root
+
+# using on arukas 
+# RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
+
 # mariadb
 RUN addgroup -S mysql \
     && adduser -S mysql -G mysql \
@@ -16,19 +23,29 @@ RUN addgroup -S mysql \
     && chown -R mysql:mysql /run/mysqld \
     && chmod -R 777 /run/mysqld
 
+RUN apk --update add openssh \
+        supervisor \
+	&& sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
+	&& echo "root:${ROOT_PASSWORD}" | chpasswd \
+	&& mkdir -p /var/logs/supervisor \
+	&& mkdir -p /var/run/supervisor \
+	&& rm -rf /var/cache/apk/* /tmp/*
+
+RUN ssh-keygen -A
+
 # python
 ENV PACKAGES="\
   python \
   py-pip \
   python-dev \
-  uwsgi-python \
 "
 
 RUN apk add --no-cache $PACKAGES \
     && pip install --no-cache-dir -Ur /requirements.txt  --index=http://pypi.open.oa.com/simple/ --trusted-host pypi.open.oa.com \
+    # && pip install --no-cache-dir -Ur /requirements.txt  --index=http://mirrors.aliyun.com/pypi/simple/  --trusted-host mirrors.aliyun.com \
     && rm -rf ~/.cache
 
-EXPOSE 3306 8000
+EXPOSE 3306 8000 22
 
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
