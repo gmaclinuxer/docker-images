@@ -7,8 +7,8 @@ COPY ./extra.sh /etc/profile.d/
 
 ENV APK_REP="mirrors.ustc.edu.cn" \
     ROOT_PASSWD="root" \
-    PYPI_HOST="pypi.open.oa.com/simple" \
-    # PYPI_HOST="mirrors.aliyun.com/pypi/simple" \
+    # PYPI_HOST="pypi.open.oa.com/simple" \
+    PYPI_HOST="mirrors.aliyun.com/pypi/simple" \
     # PYPI_HOST="pypi.douban.com/simple" \
     PACKAGES="\
     python \

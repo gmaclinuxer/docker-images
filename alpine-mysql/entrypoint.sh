@@ -26,7 +26,7 @@ if [ "$1" = "django" ]; then
     fi
 
 
-    if [ ! -d /var/lib/mysql/mysql ]; then
+    if has_no_such_process "mysqld"; then
 
         echo 'Initializing database'
         mysql_install_db --user=mysql --rpm > /dev/null

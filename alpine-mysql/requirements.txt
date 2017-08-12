@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# apk add py-pip --no-cache
+
+# uncomment blueking.* in requirements.txt and install blueking sdk
 # sudo pip install -r requirements.txt  --index=http://pypi.open.oa.com/simple/ --trusted-host pypi.open.oa.com
 
 Django==1.8.11
@@ -13,7 +14,7 @@ django-celery==3.2.1
 requests==2.11.1
 django-extensions==1.7.9
 django-cors-headers==2.0.2
-blueking.component.clouds==0.0.42
-blueking.component.ieod==0.0.36
-blueking.component.qcloud==0.1.14
-blueking.component.tencent==0.0.19
+# blueking.component.clouds==0.0.42
+# blueking.component.ieod==0.0.36
+# blueking.component.qcloud==0.1.14
+# blueking.component.tencent==0.0.19
